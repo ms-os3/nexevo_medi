@@ -1,0 +1,26 @@
+uvicorn app:app --reload
+http://localhost:8000/docs
+streamlit.run streamlit_app
+
+
+fhir bundle:
+
+{
+ "resourceType": "Bundle",
+ "type": "transaction",
+ "entry": [
+   {
+     "resource": {
+       "resourceType": "Condition",
+       "id": "cond-1",
+       "code": {
+         "coding": [
+           {"system":"urn:namaste","code":"AYU001","display":"Vata imbalance"},
+           {"system":"https://icd.who.int/icd11","code":"TM2:SK123","display":"Disorder of Vata"}
+         ]
+       }
+     }
+   }
+ ]
+}
+
