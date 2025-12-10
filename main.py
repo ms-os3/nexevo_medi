@@ -1,19 +1,30 @@
+import os
 import requests
+from dotenv import load_dotenv
+
+load_dotenv()
 
 token_endpoint = 'https://icdaccessmanagement.who.int/connect/token'
-client_id = 'ec25aa27-20e5-45be-ae55-09fe40516d90_1dccbaa7-142e-484e-9bb9-ccfec84ee1c6'
-client_secret = 'C4Ychrqu0/24KxTEINa20LG3zhUBN8lqshviMSbSFxI='
+# read credentials from environment (or .env)
+client_id = os.getenv('CLIENT_ID')
+client_secret = os.getenv('CLIENT_SECRET')
 scope = 'icdapi_access'
 grant_type = 'client_credentials'
+
+# fail fast if credentials are missing
+if not client_id or not client_secret:
+    raise RuntimeError('CLIENT_ID and CLIENT_SECRET must be set in environment or in a .env file')
 
 
 # get the OAUTH2 token
 
 # set data to post
-payload = {'client_id': client_id, 
-	   	   'client_secret': client_secret, 
-           'scope': scope, 
-           'grant_type': grant_type}
+payload = {
+    'client_id': client_id,
+    'client_secret': client_secret,
+    'scope': scope,
+    'grant_type': grant_type,
+}
            
 # make request
 r = requests.post(token_endpoint, data=payload, verify=False).json()
